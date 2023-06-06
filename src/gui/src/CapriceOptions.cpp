@@ -102,6 +102,9 @@ CapriceOptions::CapriceOptions(const CRect& WindowRect, CWindow* pParent, CFontE
     }
     m_pCheckBoxPrinterToFile->SetIsFocusable(true);
 
+    // Add an option to auto save snapshot on exit (avoid having to manually save snapshot every time)
+    m_pSaveSnapOnExitLabel = new CLabel(CPoint(27,114), m_pGroupBoxTabGeneral, "Auto Save Snapshot on exit");
+    m_CheckBoxSaveSnapOnExit = new CCheckBox(CRect(CPoint(10, 114), 10, 10), m_pGroupBoxTabGeneral);
     // ---------------- Expansion ROMs ----------------
     std::string romFileName;
     for (unsigned int i = 0; i < 16; i ++) { // create 16 'ROM' buttons

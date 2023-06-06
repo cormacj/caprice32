@@ -2143,6 +2143,7 @@ void doCleanUp ()
 
 void cleanExit(int returnCode, bool askIfUnsaved)
 {
+  std::cout << "Quitting" << (driveAltered() ? " to save" : "") << std::endl;  
    if (askIfUnsaved && driveAltered() && !userConfirmsQuitWithoutSaving()) {
      return;
    }

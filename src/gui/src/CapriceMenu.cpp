@@ -115,7 +115,7 @@ bool CapriceMenu::HandleMessage(CMessage* pMessage)
               selected = MenuItem::QUIT;
               break;
             case SDLK_r:
-            case SDLK_ESCAPE: 
+            case SDLK_ESCAPE:
               bHandled = true;
               selected = MenuItem::RESUME;
               break;
