@@ -21,6 +21,7 @@ const struct option long_options[] =
    {"offset", required_argument, nullptr, 'o'},
    {"override", required_argument, nullptr, 'O'},
    {"sym_file", required_argument, nullptr, 's'},
+   {"save_snap", required_argument, nullptr, 'S'},
    {"version",  no_argument, nullptr, 'V'},
    {"help",     no_argument, nullptr, 'h'},
    {"verbose",  no_argument, nullptr, 'v'},
@@ -42,6 +43,7 @@ void usage(std::ostream &os, char *progPath, int errcode)
    os << "   -o/--offset:            offset at which to inject the binary provided with -i (default: 0x6000)\n";
    os << "   -O/--override:          override an option from the config. Can be repeated. (example: -o system.model=3)\n";
    os << "   -s/--sym_file=<file>:   use <file> as a source of symbols and entry points for disassembling in developers' tools.\n";
+   os << "   -S/--savesnap=<file>:   automatically save a snapshot on exit\n";
    os << "   -V/--version:           outputs version and exit\n";
    os << "   -v/--verbose:           be talkative\n";
    os << "\nslotfiles is an optional list of files giving the content of the various CPC ports.\n";
@@ -102,7 +104,7 @@ void parseArguments(int argc, char **argv, std::vector<std::string>& slot_list, 
 
    optind = 0; // To please test framework, when this function is called multiple times !
    while(true) {
-      c = getopt_long (argc, argv, "a:c:hi:o:O:s:vV",
+      c = getopt_long (argc, argv, "a:c:hi:o:O:sS:vV",
                        long_options, &option_index);
       // Logs before processing of the -v will not be visible.
       LOG_DEBUG("Next option: " << c << "(" << static_cast<char>(c) << ")");
@@ -160,6 +162,10 @@ void parseArguments(int argc, char **argv, std::vector<std::string>& slot_list, 
             args.symFilePath = optarg;
             break;
 
+        case 'S':
+           args.snapFilePath = optarg;
+           break;
+
          case 'v':
             log_verbose = true;
             break;
@@ -189,7 +195,7 @@ void parseArguments(int argc, char **argv, std::vector<std::string>& slot_list, 
 #ifdef DEBUG
                       << " DEBUG"
 #endif
-#ifdef	WITH_IPF 
+#ifdef	WITH_IPF
                       << " WITH_IPF"
 #endif
                       << "\n";
@@ -211,4 +217,3 @@ void parseArguments(int argc, char **argv, std::vector<std::string>& slot_list, 
    slot_list.assign(argv+optind, argv+argc);
    LOG_DEBUG("slot_list: " << stringutils::join(slot_list, ","))
 }
-
