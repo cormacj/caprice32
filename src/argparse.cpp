@@ -21,7 +21,7 @@ const struct option long_options[] =
    {"offset", required_argument, nullptr, 'o'},
    {"override", required_argument, nullptr, 'O'},
    {"sym_file", required_argument, nullptr, 's'},
-   {"save_snap", required_argument, nullptr, 'S'},
+   {"save_snap", no_argument, nullptr, 'S'},
    {"version",  no_argument, nullptr, 'V'},
    {"help",     no_argument, nullptr, 'h'},
    {"verbose",  no_argument, nullptr, 'v'},
@@ -43,7 +43,7 @@ void usage(std::ostream &os, char *progPath, int errcode)
    os << "   -o/--offset=<address>:  offset at which to inject the binary provided with -i (default: 0x6000)\n";
    os << "   -O/--override:          override an option from the config. Can be repeated. (example: -O system.model=3)\n";
    os << "   -s/--sym_file=<file>:   use <file> as a source of symbols and entry points for disassembling in developers' tools.\n";
-   os << "   -S/--savesnap=<file>:   automatically save a snapshot on exit\n";
+   os << "   -S/--savesnap:          automatically save a timestamped snapshot on exit\n";
    os << "   -V/--version:           outputs version and exit\n";
    os << "   -v/--verbose:           be talkative\n";
    os << "\nslotfiles is an optional list of files giving the content of the various CPC ports.\n";
@@ -164,6 +164,7 @@ void parseArguments(int argc, char **argv, std::vector<std::string>& slot_list, 
 
         case 'S':
            args.snapFilePath = optarg;
+           //CPC.snap_path = optarg;
            break;
 
          case 'v':

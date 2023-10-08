@@ -1962,6 +1962,9 @@ void cleanupShowUI(SDL_Surface* guiBackSurface)
 
 bool userConfirmsQuitWithoutSaving()
 {
+   if (!args.snapFilePath.empty()) {
+     std::cout << "Save a snap: " << args.snapFilePath;
+   }
    auto guiBackSurface = prepareShowUI();
    bool confirmed = false;
    // Show warning
@@ -2142,7 +2145,11 @@ void doCleanUp ()
 
 void cleanExit(int returnCode, bool askIfUnsaved)
 {
-  std::cout << "Quitting" << (driveAltered() ? " to save" : "") << std::endl;  
+  if (!args.snapFilePath.empty()) {
+    std::cout << "Calling dumpSnapshot on exit" << "\n";
+    dumpSnapshot();
+  }
+  std::cout << "Quitting" << (driveAltered() ? " to save" : "") << std::endl;
    if (askIfUnsaved && driveAltered() && !userConfirmsQuitWithoutSaving()) {
      return;
    }
