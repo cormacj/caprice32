@@ -2149,7 +2149,6 @@ void doCleanUp ()
 
 void cleanExit(int returnCode, bool askIfUnsaved)
 {
-  std::cout << "cleanExit hit \n";
   if (args.snapExitSave == 1) {
     LOG_DEBUG("On demand calling dumpSnapshot on exit")
     dumpSnapshot();
