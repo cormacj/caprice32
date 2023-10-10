@@ -22,7 +22,7 @@ const struct option long_options[] =
    {"offset", required_argument, nullptr, 'o'},
    {"override", required_argument, nullptr, 'O'},
    {"sym_file", required_argument, nullptr, 's'},
-   {"save_snap", no_argument, nullptr, 'S'},
+   {"savesnap", no_argument, nullptr, 'S'},
    {"version",  no_argument, nullptr, 'V'},
    {"help",     no_argument, nullptr, 'h'},
    {"verbose",  no_argument, nullptr, 'v'},
@@ -41,7 +41,7 @@ void usage(std::ostream &os, char *progPath, int errcode)
    os << "   -c/--cfg_file=<file>:   use <file> as the emulator configuration file instead of the default.\n";
    os << "   -h/--help:              shows this help\n";
    os << "   -i/--inject=<file>:     inject a binary in memory after the CPC startup finishes\n";
-   os << "   -n/--noprompt:          don't prompt to save disk chage on exit\n";
+   os << "   -n/--noprompt:          don't prompt to save disk changes on exit. This is best used in combination with -S to auto-save snapshots on exit.\n";
    os << "   -o/--offset=<address>:  offset at which to inject the binary provided with -i (default: 0x6000)\n";
    os << "   -O/--override:          override an option from the config. Can be repeated. (example: -O system.model=3)\n";
    os << "   -s/--sym_file=<file>:   use <file> as a source of symbols and entry points for disassembling in developers' tools.\n";

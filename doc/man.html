@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.22.4 -->
-<!-- CreationDate: Sat Oct  7 02:26:21 2023 -->
+<!-- CreationDate: Tue Oct 10 05:24:29 2023 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -220,6 +220,13 @@ exits</p>
 <p style="margin-left:22%;">inject a binary in memory after
 the CPC startup finishes</p>
 
+<p style="margin-left:11%;"><b>-n</b>,
+<b>--noprompt</b></p>
+
+<p style="margin-left:22%;">don&rsquo;t prompt to save disk
+changes on exit. This is best used in combination with -S to
+auto-save snapshots on exit.</p>
+
 <p style="margin-left:11%;"><b>-o</b>, <b>--offset</b></p>
 
 <p style="margin-left:22%;">offset at which to inject the
@@ -237,6 +244,12 @@ config. Can be repeated. (example: -O system.model=3)</p>
 <p style="margin-left:22%;">use &lt;file&gt; as a source of
 symbols and entry points for disassembling in
 developers&rsquo; tools.</p>
+
+<p style="margin-left:11%;"><b>-S</b>,
+<b>--savesnap</b></p>
+
+<p style="margin-left:22%;">automatically save a
+timestamped snapshot on exit.</p>
 
 <p style="margin-left:11%;"><b>-V</b>, <b>--version</b></p>
 
