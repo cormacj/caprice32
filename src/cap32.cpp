@@ -1962,21 +1962,25 @@ void cleanupShowUI(SDL_Surface* guiBackSurface)
 
 bool userConfirmsQuitWithoutSaving()
 {
-   if (!args.snapFilePath.empty()) {
-     std::cout << "Save a snap: " << args.snapFilePath;
-   }
    auto guiBackSurface = prepareShowUI();
    bool confirmed = false;
-   // Show warning
-   try {
-      CapriceGui capriceGui(mainSDLWindow, /*bInMainView=*/true);
-      capriceGui.Init();
-      CapriceLeavingWithoutSavingView capriceLeavingWarning(capriceGui, back_surface, guiBackSurface, CRect(0, 0, back_surface->w, back_surface->h));
-      capriceGui.Exec();
-      confirmed = capriceLeavingWarning.Confirmed();
-   } catch(wGui::Wg_Ex_App& e) {
-      // TODO: improve: this is pretty silent if people don't look at the console
-      std::cout << "Failed displaying the leaving without saving dialog: " << e.what() << std::endl;
+   if (args.noprompt == 0) { //if user doesn't specify -n, then display Quit prompt
+     // Show warning
+     try {
+        CapriceGui capriceGui(mainSDLWindow, /*bInMainView=*/true);
+        capriceGui.Init();
+        CapriceLeavingWithoutSavingView capriceLeavingWarning(capriceGui, back_surface, guiBackSurface, CRect(0, 0, back_surface->w, back_surface->h));
+        capriceGui.Exec();
+        confirmed = capriceLeavingWarning.Confirmed();
+     } catch(wGui::Wg_Ex_App& e) {
+        // TODO: improve: this is pretty silent if people don't look at the console
+        std::cout << "Failed displaying the leaving without saving dialog: " << e.what() << std::endl;
+     }
+   }
+   else
+   {
+     //if user specified -n we pretend that the user said "yes, quit without saving"
+     confirmed = true;
    }
    cleanupShowUI(guiBackSurface);
    return confirmed;
@@ -2145,8 +2149,9 @@ void doCleanUp ()
 
 void cleanExit(int returnCode, bool askIfUnsaved)
 {
-  if (!args.snapFilePath.empty()) {
-    std::cout << "Calling dumpSnapshot on exit" << "\n";
+  std::cout << "cleanExit hit \n";
+  if (args.snapExitSave == 1) {
+    LOG_DEBUG("On demand calling dumpSnapshot on exit")
     dumpSnapshot();
   }
   std::cout << "Quitting" << (driveAltered() ? " to save" : "") << std::endl;

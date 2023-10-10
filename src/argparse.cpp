@@ -18,6 +18,7 @@ const struct option long_options[] =
    {"autocmd",  required_argument, nullptr, 'a'},
    {"cfg_file", required_argument, nullptr, 'c'},
    {"inject", required_argument, nullptr, 'i'},
+   {"noprompt", required_argument, nullptr, 'n'},
    {"offset", required_argument, nullptr, 'o'},
    {"override", required_argument, nullptr, 'O'},
    {"sym_file", required_argument, nullptr, 's'},
@@ -40,6 +41,7 @@ void usage(std::ostream &os, char *progPath, int errcode)
    os << "   -c/--cfg_file=<file>:   use <file> as the emulator configuration file instead of the default.\n";
    os << "   -h/--help:              shows this help\n";
    os << "   -i/--inject=<file>:     inject a binary in memory after the CPC startup finishes\n";
+   os << "   -n/--noprompt:          don't prompt to save disk chage on exit\n";
    os << "   -o/--offset=<address>:  offset at which to inject the binary provided with -i (default: 0x6000)\n";
    os << "   -O/--override:          override an option from the config. Can be repeated. (example: -O system.model=3)\n";
    os << "   -s/--sym_file=<file>:   use <file> as a source of symbols and entry points for disassembling in developers' tools.\n";
@@ -104,7 +106,7 @@ void parseArguments(int argc, char **argv, std::vector<std::string>& slot_list, 
 
    optind = 0; // To please test framework, when this function is called multiple times !
    while(true) {
-      c = getopt_long (argc, argv, "a:c:hi:o:O:sS:vV",
+      c = getopt_long (argc, argv, "a:c:hi:o:O:s:nSvV",
                        long_options, &option_index);
       // Logs before processing of the -v will not be visible.
       LOG_DEBUG("Next option: " << c << "(" << static_cast<char>(c) << ")");
@@ -131,6 +133,10 @@ void parseArguments(int argc, char **argv, std::vector<std::string>& slot_list, 
 
          case 'i':
             args.binFile = optarg;
+            break;
+
+         case 'n':
+            args.noprompt = 1; //Flag for skipping the "Unsave changes" popup on exit
             break;
 
          case 'o':
@@ -163,8 +169,7 @@ void parseArguments(int argc, char **argv, std::vector<std::string>& slot_list, 
             break;
 
         case 'S':
-           args.snapFilePath = optarg;
-           //CPC.snap_path = optarg;
+           args.snapExitSave = 1; //flag for enabling a snapshot dump on exit
            break;
 
          case 'v':
