@@ -18,7 +18,7 @@ const struct option long_options[] =
    {"autocmd",  required_argument, nullptr, 'a'},
    {"cfg_file", required_argument, nullptr, 'c'},
    {"inject", required_argument, nullptr, 'i'},
-   {"noprompt", required_argument, nullptr, 'n'},
+   {"noprompt", no_argument, nullptr, 'n'},
    {"offset", required_argument, nullptr, 'o'},
    {"override", required_argument, nullptr, 'O'},
    {"sym_file", required_argument, nullptr, 's'},
@@ -106,7 +106,7 @@ void parseArguments(int argc, char **argv, std::vector<std::string>& slot_list, 
 
    optind = 0; // To please test framework, when this function is called multiple times !
    while(true) {
-      c = getopt_long (argc, argv, "a:c:hi:o:O:s:nSvV",
+      c = getopt_long (argc, argv, "a:c:Snhi:o:O:s:vV",
                        long_options, &option_index);
       // Logs before processing of the -v will not be visible.
       LOG_DEBUG("Next option: " << c << "(" << static_cast<char>(c) << ")");
