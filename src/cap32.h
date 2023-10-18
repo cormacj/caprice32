@@ -244,6 +244,8 @@ typedef struct {
 
    std::string snap_path; // Path where machine state snapshots will be loaded/saved by default.
    std::string snap_file; // Path to the actual file (zip or not)
+   unsigned int snap_autosave; // Flag if a snap is to be autosaved on exit
+   std::string snap_autosave_file; // Filename to be used for autosave snap on exit
 
    std::string cart_path;
    std::string cart_file;
