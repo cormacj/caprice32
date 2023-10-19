@@ -1964,7 +1964,7 @@ bool userConfirmsQuitWithoutSaving()
 {
    auto guiBackSurface = prepareShowUI();
    bool confirmed = false;
-   if (args.noprompt == 0) { //if user doesn't specify -n, then display Quit prompt
+   if (CPC.snap_autosave == 0) { //if not saving snapshots, then display Quit prompt
      // Show warning
      try {
         CapriceGui capriceGui(mainSDLWindow, /*bInMainView=*/true);
@@ -2149,7 +2149,7 @@ void doCleanUp ()
 
 void cleanExit(int returnCode, bool askIfUnsaved)
 {
-  if (args.snapExitSave == 1) {
+  if (CPC.snap_autosave == 1) {
     LOG_DEBUG("On demand calling dumpSnapshot on exit")
     dumpSnapshot();
   }

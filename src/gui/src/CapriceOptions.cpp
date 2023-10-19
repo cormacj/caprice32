@@ -106,7 +106,7 @@ CapriceOptions::CapriceOptions(const CRect& WindowRect, CWindow* pParent, CFontE
     // Add an option to auto save snapshot on exit (avoid having to manually save snapshot every time)
     m_pSaveSnapOnExitLabel = new CLabel(CPoint(27,114), m_pGroupBoxTabGeneral, "Auto Save Snapshot on exit");
     m_CheckBoxSaveSnapOnExit = new CCheckBox(CRect(CPoint(10, 114), 10, 10), m_pGroupBoxTabGeneral);
-    if (args.snapExitSave == 1) {
+    if (CPC.snap_autosave == 1) {
           m_CheckBoxSaveSnapOnExit->SetCheckBoxState(CCheckBox::CHECKED);
         }
     // ---------------- Expansion ROMs ----------------
