@@ -15,8 +15,6 @@
 // CPC emulation properties, defined in cap32.h:
 extern t_CPC CPC;
 
-extern CapriceArgs args; //needed for the skip saving on quit prompt
-
 namespace wGui {
 
 CapriceMenu::CapriceMenu(const CRect& WindowRect, CWindow* pParent, SDL_Surface* screen, CFontEngine* pFontEngine) :

@@ -15,7 +15,6 @@ class CapriceArgs
       size_t binOffset;
       std::map<std::string, std::map<std::string, std::string>> cfgOverrides;
       std::string symFilePath;
-      std::string snapAutoSave; //used for save snap on exit
 };
 
 std::string replaceCap32Keys(std::string command);

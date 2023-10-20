@@ -1979,7 +1979,7 @@ bool userConfirmsQuitWithoutSaving()
    }
    else
    {
-     //if user specified -n we pretend that the user said "yes, quit without saving"
+     //if auto-saving a snapshot, ignore disk changes because these are captured in the snap file.
      confirmed = true;
    }
    cleanupShowUI(guiBackSurface);
