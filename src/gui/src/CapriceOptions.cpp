@@ -103,7 +103,7 @@ CapriceOptions::CapriceOptions(const CRect& WindowRect, CWindow* pParent, CFontE
     m_pCheckBoxPrinterToFile->SetIsFocusable(true);
 
     // ---------------- Save snapshot on exit ----------------
-    // Add an option to auto save snapshot on exit (avoid having to manually save snapshot every time)
+    // Add an option to auto-save snapshot on exit
     m_pSaveSnapOnExitLabel = new CLabel(CPoint(27,114), m_pGroupBoxTabGeneral, "Auto-save snapshot on exit. Filename:");
     m_CheckBoxSaveSnapOnExit = new CCheckBox(CRect(CPoint(10, 114), 10, 10), m_pGroupBoxTabGeneral);
     m_pSnapAutosaveName      = new CEditBox(CRect(CPoint(220, 109),  80, 20), m_pGroupBoxTabGeneral);
