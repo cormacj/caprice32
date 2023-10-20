@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.22.4 -->
-<!-- CreationDate: Tue Oct 10 05:24:29 2023 -->
+<!-- CreationDate: Fri Oct 20 03:54:13 2023 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -220,13 +220,6 @@ exits</p>
 <p style="margin-left:22%;">inject a binary in memory after
 the CPC startup finishes</p>
 
-<p style="margin-left:11%;"><b>-n</b>,
-<b>--noprompt</b></p>
-
-<p style="margin-left:22%;">don&rsquo;t prompt to save disk
-changes on exit. This is best used in combination with -S to
-auto-save snapshots on exit.</p>
-
 <p style="margin-left:11%;"><b>-o</b>, <b>--offset</b></p>
 
 <p style="margin-left:22%;">offset at which to inject the
@@ -246,10 +239,12 @@ symbols and entry points for disassembling in
 developers&rsquo; tools.</p>
 
 <p style="margin-left:11%;"><b>-S</b>,
-<b>--savesnap</b></p>
+<b>--savesnap=</b><i>file</i></p>
 
-<p style="margin-left:22%;">automatically save a
-timestamped snapshot on exit.</p>
+<p style="margin-left:22%;">automatically save a snapshot
+on exit, named &lt;file&gt; into the default snaps folder.
+If you specify --savesnap=&quot;&quot; then a timestamped
+filename will be generated.</p>
 
 <p style="margin-left:11%;"><b>-V</b>, <b>--version</b></p>
 

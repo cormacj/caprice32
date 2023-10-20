@@ -72,6 +72,9 @@ namespace wGui
 
       CLabel* m_pSaveSnapOnExitLabel;    // option to auto save a snap on exit
       CCheckBox* m_CheckBoxSaveSnapOnExit;
+
+      CEditBox *m_pSnapAutosaveName;
+
       // Expansion ROMs
       std::vector<CButton *> m_pButtonRoms; // contains pointer to 16 'ROM buttons'
 

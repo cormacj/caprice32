@@ -104,11 +104,15 @@ CapriceOptions::CapriceOptions(const CRect& WindowRect, CWindow* pParent, CFontE
 
     // ---------------- Save snapshot on exit ----------------
     // Add an option to auto save snapshot on exit (avoid having to manually save snapshot every time)
-    m_pSaveSnapOnExitLabel = new CLabel(CPoint(27,114), m_pGroupBoxTabGeneral, "Auto Save Snapshot on exit");
+    m_pSaveSnapOnExitLabel = new CLabel(CPoint(27,114), m_pGroupBoxTabGeneral, "Auto-save snapshot on exit. Filename:");
     m_CheckBoxSaveSnapOnExit = new CCheckBox(CRect(CPoint(10, 114), 10, 10), m_pGroupBoxTabGeneral);
+    m_pSnapAutosaveName      = new CEditBox(CRect(CPoint(220, 109),  80, 20), m_pGroupBoxTabGeneral);
     if (CPC.snap_autosave == 1) {
           m_CheckBoxSaveSnapOnExit->SetCheckBoxState(CCheckBox::CHECKED);
         }
+    if (!CPC.snap_autosave_file.empty()) {
+      m_pSnapAutosaveName->SetWindowText(CPC.snap_autosave_file);
+    }
     // ---------------- Expansion ROMs ----------------
     std::string romFileName;
     for (unsigned int i = 0; i < 16; i ++) { // create 16 'ROM' buttons
@@ -351,6 +355,8 @@ bool CapriceOptions::HandleMessage(CMessage* pMessage)
               CPC.limit_speed = (m_pCheckBoxLimitSpeed->GetCheckBoxState() == CCheckBox::CHECKED)?1:0;
               CPC.speed    = m_pScrollBarCPCSpeed->GetValue();
               CPC.printer  = (m_pCheckBoxPrinterToFile->GetCheckBoxState() == CCheckBox::CHECKED)?1:0;
+              CPC.snap_autosave = (m_CheckBoxSaveSnapOnExit->GetCheckBoxState() == CCheckBox::CHECKED)?1:0;
+              CPC.snap_autosave_file = m_pSnapAutosaveName->GetWindowText();
               // Selected ROM slots ( "..." is empty)
               // Take the text on each 'ROM' button, if it is "...", clear the ROM, else
               // set the ROM filename:
