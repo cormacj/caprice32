@@ -2090,13 +2090,21 @@ void dumpScreen() {
 }
 
 // Very similar to screenshot, but difficult to factorize :-)
+// Notes: This is called from Shift F3 (aka CAP32_SNAPSHOT) and from the snap_autosave path
 void dumpSnapshot() {
    std::string dir = CPC.snap_path;
+   std::string dumpFile = "";
+
    if (!is_directory(dir)) {
           LOG_ERROR("Unable to find or open directory " + CPC.snap_path + " when trying to take a machine snapshot. Defaulting to current directory.")
           dir = ".";
    }
-   std::string dumpFile = "snapshot_" + getDateString() + ".sna";
+   //If we don't have a snapshot file defined, use the timestamp filename, else use the requested filename
+   if (CPC.snap_autosave_file.empty()) {
+        dumpFile = "snapshot_" + getDateString() + ".sna";
+      } else {
+        dumpFile = CPC.snap_autosave_file;
+      }
    std::string dumpPath = dir + "/" + dumpFile;
    LOG_INFO("Dumping machine snapshot to " + dumpPath);
    if (snapshot_save(dumpPath)) {
