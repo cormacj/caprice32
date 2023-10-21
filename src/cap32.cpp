@@ -1962,25 +1962,41 @@ void cleanupShowUI(SDL_Surface* guiBackSurface)
 
 bool userConfirmsQuitWithoutSaving()
 {
+   // auto guiBackSurface = prepareShowUI();
+   // bool confirmed = false;
+   // if (CPC.snap_autosave == 0) { //if not saving snapshots, then display Quit prompt
+   //   // Show warning
+   //   try {
+   //      CapriceGui capriceGui(mainSDLWindow, /*bInMainView=*/true);
+   //      capriceGui.Init();
+   //      CapriceLeavingWithoutSavingView capriceLeavingWarning(capriceGui, back_surface, guiBackSurface, CRect(0, 0, back_surface->w, back_surface->h));
+   //      capriceGui.Exec();
+   //      confirmed = capriceLeavingWarning.Confirmed();
+   //   } catch(wGui::Wg_Ex_App& e) {
+   //      // TODO: improve: this is pretty silent if people don't look at the console
+   //      std::cout << "Failed displaying the leaving without saving dialog: " << e.what() << std::endl;
+   //   }
+   // }
+   // else
+   // {
+   //   //if auto-saving a snapshot, ignore disk changes because these are captured in the snap file.
+   //   confirmed = true;
+   // }
+   // cleanupShowUI(guiBackSurface);
+   // return confirmed;
+   std::cout << "Save this disk, maybe?\n";
    auto guiBackSurface = prepareShowUI();
    bool confirmed = false;
-   if (CPC.snap_autosave == 0) { //if not saving snapshots, then display Quit prompt
-     // Show warning
-     try {
-        CapriceGui capriceGui(mainSDLWindow, /*bInMainView=*/true);
-        capriceGui.Init();
-        CapriceLeavingWithoutSavingView capriceLeavingWarning(capriceGui, back_surface, guiBackSurface, CRect(0, 0, back_surface->w, back_surface->h));
-        capriceGui.Exec();
-        confirmed = capriceLeavingWarning.Confirmed();
-     } catch(wGui::Wg_Ex_App& e) {
-        // TODO: improve: this is pretty silent if people don't look at the console
-        std::cout << "Failed displaying the leaving without saving dialog: " << e.what() << std::endl;
-     }
-   }
-   else
-   {
-     //if auto-saving a snapshot, ignore disk changes because these are captured in the snap file.
-     confirmed = true;
+   // Show warning
+   try {
+      CapriceGui capriceGui(mainSDLWindow, /*bInMainView=*/true);
+      capriceGui.Init();
+      CapriceLeavingWithoutSavingView capriceLeavingWarning(capriceGui, back_surface, guiBackSurface, CRect(0, 0, back_surface->w, back_surface->h));
+      capriceGui.Exec();
+      confirmed = capriceLeavingWarning.Confirmed();
+   } catch(wGui::Wg_Ex_App& e) {
+      // TODO: improve: this is pretty silent if people don't look at the console
+      std::cout << "Failed displaying the leaving without saving dialog: " << e.what() << std::endl;
    }
    cleanupShowUI(guiBackSurface);
    return confirmed;

@@ -181,7 +181,8 @@ bool CapriceMenu::HandleMessage(CMessage* pMessage)
       {
         // TODO(cpitrat): Find a way to deduplicate this with the version in cap32.cpp/CapriceLeavingWithoutSavingView.cpp
         // The problem is that userConfirmsQuitWithoutSaving doesn't work if a GUI is already displayed.
-        if (driveAltered() && (CPC.snap_autosave == 0)) {
+        //if (driveAltered() && (CPC.snap_autosave == 0)) {
+        if (driveAltered()) {
           wGui::CMessageBox* m_pMessageBox = new wGui::CMessageBox(CRect(CPoint(m_ClientRect.Width() /2 - 125, m_ClientRect.Height() /2 - 40), 250, 80), this, nullptr, "Quit without saving?", "Unsaved changes. Do you really want to quit?", CMessageBox::BUTTON_YES | CMessageBox::BUTTON_NO);
           m_pMessageBox->SetModal(true);
         } else {
