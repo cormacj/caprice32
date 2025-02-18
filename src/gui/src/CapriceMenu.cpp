@@ -23,7 +23,7 @@ CapriceMenu::CapriceMenu(const CRect& WindowRect, CWindow* pParent, SDL_Surface*
   SetModal(true);
   std::map<MenuItem, std::string> buttons = {
     { MenuItem::OPTIONS, "Options" },
-    { MenuItem::LOAD_SAVE, "Load / Save" },
+    { MenuItem::LOAD_SAVE, "Disc Management" },
     { MenuItem::MEMORY_TOOL, "Memory tool" },
     { MenuItem::RESET, "Reset (F5)" },
     { MenuItem::ABOUT, "About" },
@@ -115,7 +115,7 @@ bool CapriceMenu::HandleMessage(CMessage* pMessage)
               selected = MenuItem::QUIT;
               break;
             case SDLK_r:
-            case SDLK_ESCAPE: 
+            case SDLK_ESCAPE:
               bHandled = true;
               selected = MenuItem::RESUME;
               break;

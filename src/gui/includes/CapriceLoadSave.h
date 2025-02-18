@@ -10,6 +10,7 @@
 #include "wg_listbox.h"
 #include "wg_frame.h"
 #include "wg_navigationbar.h"
+#include "wg_groupbox.h"
 #include <string>
 
 class CapriceLoadSaveTest;
@@ -28,6 +29,9 @@ namespace wGui
         void UpdateFilesList();
         bool MatchCurrentFileSpec(const char* filename);
 
+        // activate the specified tab (make its controls visible)
+        void EnableTab(std::string sTabName);
+        
       protected:
         friend CapriceLoadSaveTest;
 
@@ -43,8 +47,17 @@ namespace wGui
         CEditBox *m_pFileNameValue;
         CButton  *m_pCancelButton;
         CButton  *m_pLoadSaveButton;
+        CListBox *m_pFormatsList;
+
+        // groupbox to group the controls on each 'tab':
+        CGroupBox* m_pGroupBoxLoadSave;
+        CGroupBox* m_pGroupBoxEject;
+        CGroupBox* m_pGroupBoxFormat;
+
 
       private:
+        std::map<std::string, CGroupBox*> TabMap;  // mapping: <tab name> -> <groupbox that contains the 'tab'>.
+
         CapriceLoadSave(const CapriceLoadSave&) = delete;
         CapriceLoadSave& operator=(const CapriceLoadSave&) = delete;
     };

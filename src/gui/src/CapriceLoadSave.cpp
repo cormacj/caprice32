@@ -44,12 +44,20 @@ extern t_drive driveB;
 namespace wGui {
 
 CapriceLoadSave::CapriceLoadSave(const CRect& WindowRect, CWindow* pParent, CFontEngine* pFontEngine) :
-  CFrame(WindowRect, pParent, pFontEngine, "Load / Save", false)
+  CFrame(WindowRect, pParent, pFontEngine, "Disc Management", false)
 {
   SetModal(true);
   // Make this window listen to incoming CTRL_VALUECHANGE messages (used for updating drop down values)
   Application().MessageServer()->RegisterMessageClient(this, CMessage::CTRL_VALUECHANGE);
   Application().MessageServer()->RegisterMessageClient(this, CMessage::CTRL_VALUECHANGING);
+
+  //Define the groups
+  m_pGroupBoxLoadSave  = new CGroupBox(CRect(CPoint(10, 115), 250, 100), this, "LoadSave");
+  m_pGroupBoxFormat    = new CGroupBox(CRect(CPoint(80, 115), 150, 80), this, "Format");
+  // m_pGroupBoxEject     = new CGroupBox(CRect(CPoint(80, 115), 150, 80), this, "");
+
+  TabMap["loadsave"] = m_pGroupBoxLoadSave;
+  TabMap["format"] = m_pGroupBoxFormat;
 
   // File type (.SNA, .DSK, .TAP, .VOC)
   m_pTypeLabel = new CLabel(          CPoint(15, 25),             this, "File type: ");
@@ -74,7 +82,9 @@ CapriceLoadSave::CapriceLoadSave(const CRect& WindowRect, CWindow* pParent, CFon
   m_pActionValue = new CDropDown( CRect(CPoint(80, 50), 150, 20),   this, false);
   m_pActionValue->AddItem(SListItem("Load"));
   m_pActionValue->AddItem(SListItem("Save"));
-  m_pActionValue->SetListboxHeight(2);
+  m_pActionValue->AddItem(SListItem("New Blank"));
+  m_pActionValue->AddItem(SListItem("Eject"));
+  m_pActionValue->SetListboxHeight(4);
   m_pActionValue->SelectItem(0);
   m_pActionValue->SetIsFocusable(true);
 
@@ -85,7 +95,7 @@ CapriceLoadSave::CapriceLoadSave(const CRect& WindowRect, CWindow* pParent, CFon
   m_pDirectoryValue->SetReadOnly(true);
 
   // File list
-  m_pFilesList = new CListBox(CRect(CPoint(80, 115), 150, 80), this, true);
+  m_pFilesList = new CListBox(CRect(CPoint(80, 15), 150, 0), m_pGroupBoxLoadSave, true);
   m_pFilesList->SetIsFocusable(true);
   UpdateFilesList();
 
@@ -220,6 +230,8 @@ bool CapriceLoadSave::HandleMessage(CMessage* pMessage)
         if (pMessage->Destination() == m_pActionValue) {
           switch (m_pActionValue->GetSelectedIndex()) {
             case 0: // Load
+              EnableTab("loadsave");
+              UpdateFilesList();
               m_pLoadSaveButton->SetWindowText("Load");
               m_pFileNameValue->SetReadOnly(true);
               break;
@@ -227,6 +239,20 @@ bool CapriceLoadSave::HandleMessage(CMessage* pMessage)
               m_pLoadSaveButton->SetWindowText("Save");
               m_pFileNameValue->SetReadOnly(false);
               break;
+            case 2: // New Blank
+              // File list
+              EnableTab("format");
+              m_pFormatsList = new CListBox(CRect(CPoint(80, 0), 80, 16), m_pGroupBoxFormat, true);
+              m_pFormatsList->SetIsFocusable(true);
+              // m_pFilesList->ClearItems();
+              // m_pFilesList->SetIsFocusable(false);
+              m_pLoadSaveButton->SetWindowText("Insert");
+              m_pFormatsList->AddItem(SListItem("178k Data Format"));
+              m_pFormatsList->AddItem(SListItem("169k Vendor Format"));
+              m_pFileNameValue->SetReadOnly(false);
+              // delete m_pFormatsList;
+              m_pFormatsList->SetIsFocusable(false);
+
           }
         }
         if (pMessage->Destination() == m_pTypeValue) {
@@ -321,6 +347,14 @@ bool CapriceLoadSave::MatchCurrentFileSpec(const char* filename)
     }
   }
   return false;
+}
+
+// Enable a 'tab', i.e. make the corresponding CGroupBox (and its content) visible.
+void CapriceLoadSave::EnableTab(std::string sTabName) {
+    std::map<std::string, CGroupBox*>::const_iterator iter;
+    for (iter=TabMap.begin(); iter != TabMap.end(); ++iter) {
+           iter->second->SetVisible(iter->first == sTabName);
+    }
 }
 
 void CapriceLoadSave::UpdateFilesList()
